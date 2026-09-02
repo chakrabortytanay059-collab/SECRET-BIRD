@@ -1,290 +1,848 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>SECRET BIRD 🐦</title>
 
+
     <style>
+
         * {
             box-sizing: border-box;
         }
 
+
         body {
+
             margin: 0;
+
             overflow: hidden;
+
             font-family: Arial, sans-serif;
-            background: linear-gradient(#87ceeb 0%, #bde9ff 65%, #4caf50 65%);
+
+            background:
+                linear-gradient(
+                    #87ceeb 0%,
+                    #bde9ff 65%,
+                    #4caf50 65%
+                );
+
             height: 100vh;
+
         }
+
+
+        /* =========================
+           TITLE
+        ========================= */
 
         .title {
+
             text-align: center;
+
             padding-top: 20px;
+
             position: relative;
+
             z-index: 10;
+
         }
+
 
         .title h1 {
+
             margin: 0;
+
             font-size: 32px;
+
         }
+
 
         .title p {
+
             margin: 8px 0;
+
         }
+
+
+        /* =========================
+           CONTROL AREA
+        ========================= */
 
         .control {
+
             text-align: center;
+
             position: relative;
+
             z-index: 10;
+
         }
+
 
         input {
+
             width: 220px;
+
             padding: 12px;
+
             font-size: 17px;
+
             text-align: center;
+
             border: 2px solid #333;
+
             border-radius: 8px;
+
+            outline: none;
+
         }
+
+
+        input:focus {
+
+            border-color: #008000;
+
+        }
+
 
         button {
+
             margin-top: 10px;
+
             padding: 12px 22px;
+
             font-size: 16px;
+
             font-weight: bold;
+
             border: none;
+
             border-radius: 8px;
+
             cursor: pointer;
+
             background: #222;
+
             color: white;
+
         }
+
+
+        button:hover {
+
+            background: #444;
+
+        }
+
+
+        button:disabled {
+
+            background: #777;
+
+            cursor: not-allowed;
+
+        }
+
 
         #status {
+
             margin-top: 10px;
+
             font-weight: bold;
+
         }
+
+
+        /* =========================
+           NAME AREA
+        ========================= */
+
+        #nameArea {
+
+            display: none;
+
+            margin-top: 12px;
+
+        }
+
+
+        #flyButton {
+
+            background: #008000;
+
+        }
+
+
+        #flyButton:hover {
+
+            background: #006400;
+
+        }
+
+
+        /* =========================
+           FLYERS BOX
+        ========================= */
+
+        #flyersBox {
+
+            position: absolute;
+
+            z-index: 20;
+
+            top: 15px;
+
+            left: 15px;
+
+            width: 220px;
+
+            max-height: 280px;
+
+            overflow-y: auto;
+
+            background:
+                rgba(255,255,255,0.94);
+
+            border: 2px solid #333;
+
+            border-radius: 12px;
+
+            padding: 10px;
+
+            box-shadow:
+                0 4px 12px
+                rgba(0,0,0,0.2);
+
+        }
+
+
+        #flyersBox h3 {
+
+            margin:
+                0 0 8px;
+
+            text-align: center;
+
+        }
+
+
+        .flyer {
+
+            background: #f1f1f1;
+
+            border-radius: 7px;
+
+            padding: 7px;
+
+            margin-top: 5px;
+
+            font-size: 14px;
+
+            text-align: left;
+
+            word-break: break-word;
+
+        }
+
+
+        /* =========================
+           GROUND
+        ========================= */
 
         .ground {
+
             position: absolute;
+
             left: 0;
+
             right: 0;
+
             bottom: 0;
+
             height: 35%;
+
             background: #4caf50;
+
         }
+
+
+        /* =========================
+           BRANCH
+        ========================= */
 
         .branch {
+
             position: absolute;
+
             width: 420px;
+
             height: 18px;
+
             background: #5d4037;
+
             left: 50%;
+
             top: 72%;
-            transform: translateX(-50%);
+
+            transform:
+                translateX(-50%);
+
             border-radius: 10px;
+
         }
+
+
+        /* =========================
+           BIRD
+        ========================= */
 
         .bird {
+
             position: absolute;
+
             left: 50%;
+
             top: 58%;
+
             width: 100px;
+
             height: 80px;
-            transform: translate(-50%, -50%);
+
+            transform:
+                translate(-50%, -50%);
+
             transition: none;
+
+            z-index: 5;
+
         }
+
 
         .body {
+
             position: absolute;
+
             width: 75px;
+
             height: 55px;
+
             background: black;
+
             border-radius: 50%;
+
             left: 10px;
+
             top: 20px;
+
         }
+
 
         .head {
+
             position: absolute;
+
             width: 55px;
+
             height: 55px;
+
             background: black;
+
             border-radius: 50%;
+
             left: 55px;
+
             top: 0;
+
         }
+
 
         .eye {
+
             position: absolute;
+
             width: 10px;
+
             height: 10px;
+
             background: white;
+
             border-radius: 50%;
+
             left: 88px;
+
             top: 15px;
+
             z-index: 3;
+
         }
+
 
         .eye::after {
+
             content: "";
+
             position: absolute;
+
             width: 5px;
+
             height: 5px;
+
             background: black;
+
             border-radius: 50%;
+
             left: 3px;
+
             top: 3px;
+
         }
+
 
         .beak {
+
             position: absolute;
+
             width: 0;
+
             height: 0;
-            border-top: 10px solid transparent;
-            border-bottom: 10px solid transparent;
-            border-left: 28px solid orange;
+
+            border-top:
+                10px solid transparent;
+
+            border-bottom:
+                10px solid transparent;
+
+            border-left:
+                28px solid orange;
+
             left: 105px;
+
             top: 20px;
+
         }
+
 
         .wing {
+
             position: absolute;
+
             width: 55px;
+
             height: 45px;
+
             background: #222;
+
             border-radius: 50%;
+
             left: 5px;
+
             top: 5px;
+
             transform-origin: center;
-            animation: flap 0.25s infinite alternate;
+
+            animation:
+                flap 0.25s
+                infinite alternate;
+
         }
 
+
         @keyframes flap {
+
             from {
-                transform: rotate(-25deg);
+
+                transform:
+                    rotate(-25deg);
+
             }
 
             to {
-                transform: rotate(30deg);
+
+                transform:
+                    rotate(30deg);
+
             }
+
         }
+
 
         .tail {
+
             position: absolute;
+
             left: -30px;
+
             top: 25px;
+
             width: 0;
+
             height: 0;
-            border-top: 18px solid transparent;
-            border-bottom: 18px solid transparent;
-            border-right: 55px solid black;
+
+            border-top:
+                18px solid transparent;
+
+            border-bottom:
+                18px solid transparent;
+
+            border-right:
+                55px solid black;
+
         }
 
+
+        /* =========================
+           CLOUDS
+        ========================= */
+
         .cloud {
+
             position: absolute;
+
             background: white;
+
             border-radius: 50px;
+
             width: 120px;
+
             height: 40px;
+
             opacity: 0.9;
+
         }
+
 
         .cloud::before,
         .cloud::after {
+
             content: "";
+
             position: absolute;
+
             background: white;
+
             border-radius: 50%;
+
         }
+
 
         .cloud::before {
+
             width: 55px;
+
             height: 55px;
+
             left: 20px;
+
             top: -25px;
+
         }
+
 
         .cloud::after {
+
             width: 60px;
+
             height: 60px;
+
             right: 15px;
+
             top: -30px;
+
         }
+
 
         .cloud1 {
+
             left: 8%;
+
             top: 22%;
+
         }
+
 
         .cloud2 {
+
             left: 65%;
+
             top: 25%;
+
         }
+
+
+        /* =========================
+           SUN
+        ========================= */
 
         .sun {
+
             position: absolute;
+
             width: 80px;
+
             height: 80px;
+
             background: #ffd700;
+
             border-radius: 50%;
+
             right: 8%;
+
             top: 8%;
+
         }
+
+
+        /* =========================
+           FLY ANIMATION
+        ========================= */
 
         .flying {
-            animation: flyAway 3s linear forwards;
+
+            animation:
+                flyAway 3s
+                linear forwards;
+
         }
+
 
         @keyframes flyAway {
+
             0% {
-                transform: translate(-50%, -50%) translate(0, 0) rotate(0deg);
+
+                transform:
+                    translate(-50%, -50%)
+                    translate(0, 0)
+                    rotate(0deg);
+
             }
 
+
             100% {
-                transform: translate(-50%, -50%) translate(700px, -500px) rotate(10deg);
+
+                transform:
+                    translate(-50%, -50%)
+                    translate(700px, -500px)
+                    rotate(10deg);
+
             }
+
         }
+
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 600px) {
+
+
+            #flyersBox {
+
+                width: 170px;
+
+                max-height: 190px;
+
+                top: 10px;
+
+                left: 10px;
+
+                font-size: 13px;
+
+            }
+
+
+            .title {
+
+                padding-top: 70px;
+
+            }
+
+
+            .title h1 {
+
+                font-size: 26px;
+
+            }
+
+
+            .title p {
+
+                font-size: 14px;
+
+            }
+
+
+            .branch {
+
+                width: 280px;
+
+            }
+
+
+            .sun {
+
+                width: 60px;
+
+                height: 60px;
+
+            }
+
+
+        }
+
     </style>
+
 </head>
+
 
 <body>
 
+
+    <!-- SUN -->
+
     <div class="sun"></div>
 
+
+    <!-- CLOUDS -->
+
     <div class="cloud cloud1"></div>
+
     <div class="cloud cloud2"></div>
 
-    <div class="title">
-        <h1>🐦 SECRET BIRD</h1>
-        <p>Enter the secret PIN to release the bird</p>
-    </div>
 
-    <div class="control">
+    <!-- =========================
+         BIRD FLYERS
+    ========================= -->
 
-        <input
-            id="pin"
-            type="password"
-            placeholder="Enter PIN"
-        >
+    <div id="flyersBox">
 
-        <br>
+        <h3>
+            🏆 Bird Flyers
+        </h3>
 
-        <button onclick="unlockBird()">
-            🔓 UNLOCK BIRD
-        </button>
+        <div id="flyersList">
 
-        <div id="status">
-            🔐 Waiting for secret PIN...
+            Connecting...
+
         </div>
 
     </div>
 
+
+    <!-- =========================
+         TITLE
+    ========================= -->
+
+    <div class="title">
+
+        <h1>
+            🐦 SECRET BIRD
+        </h1>
+
+        <p>
+            Enter the secret PIN to release the bird
+        </p>
+
+    </div>
+
+
+    <!-- =========================
+         CONTROLS
+    ========================= -->
+
+    <div class="control">
+
+
+        <!-- PIN AREA -->
+
+        <div id="pinArea">
+
+
+            <input
+                id="pin"
+                type="password"
+                placeholder="Enter PIN"
+                autocomplete="off"
+            >
+
+
+            <br>
+
+
+            <button id="unlockButton">
+
+                🔓 UNLOCK BIRD
+
+            </button>
+
+
+        </div>
+
+
+
+        <!-- NAME AREA -->
+
+        <div id="nameArea">
+
+
+            <input
+                id="name"
+                type="text"
+                maxlength="30"
+                placeholder="Enter your name"
+                autocomplete="off"
+            >
+
+
+            <br>
+
+
+            <button id="flyButton">
+
+                🐦 FLY THE BIRD
+
+            </button>
+
+
+        </div>
+
+
+        <!-- STATUS -->
+
+        <div id="status">
+
+            🔐 Waiting for secret PIN...
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- BRANCH -->
+
     <div class="branch"></div>
 
-    <div class="bird" id="bird">
+
+
+    <!-- =========================
+         BIRD
+    ========================= -->
+
+    <div
+        class="bird"
+        id="bird"
+    >
 
         <div class="tail"></div>
 
@@ -300,54 +858,711 @@
 
     </div>
 
+
+
+    <!-- GROUND -->
+
     <div class="ground"></div>
 
 
-    <script>
 
-        const SECRET_PIN = "BIRD786";
+    <!-- =================================================
+         FIREBASE + SECRET BIRD SCRIPT
+    ================================================= -->
+
+    <script type="module">
+
+
+        /* =================================================
+           FIREBASE IMPORT
+        ================================================= */
+
+
+        import {
+            initializeApp
+        }
+        from
+        "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+
+
+        import {
+            getAuth,
+            signInAnonymously
+        }
+        from
+        "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+
+
+        import {
+            getDatabase,
+            ref,
+            set,
+            onValue
+        }
+        from
+        "https://www.gstatic.com/firebasejs/12.18.0/firebase-database.js";
+
+
+
+        /* =================================================
+           FIREBASE CONFIG
+        ================================================= */
+
+
+        const firebaseConfig = {
+
+
+            apiKey:
+                "AIzaSyBn0vyfgYp5pDiUnXxB386vAk-bC0tw0Z4",
+
+
+            authDomain:
+                "secret-bird-62c74.firebaseapp.com",
+
+
+            databaseURL:
+                "https://secret-bird-62c74-default-rtdb.asia-southeast1.firebasedatabase.app",
+
+
+            projectId:
+                "secret-bird-62c74",
+
+
+            storageBucket:
+                "secret-bird-62c74.firebasestorage.app",
+
+
+            messagingSenderId:
+                "960919172795",
+
+
+            appId:
+                "1:960919172795:web:c3bac19699e148966f5b9e",
+
+
+            measurementId:
+                "G-80EDGJ3TNP"
+
+        };
+
+
+
+        /* =================================================
+           FIREBASE INITIALIZE
+        ================================================= */
+
+
+        const app =
+            initializeApp(firebaseConfig);
+
+
+        const auth =
+            getAuth(app);
+
+
+        const db =
+            getDatabase(app);
+
+
+
+        /* =================================================
+           VARIABLES
+        ================================================= */
+
+
+        const SECRET_PIN =
+            "BIRD786";
+
+
+        let currentUser =
+            null;
+
+
+        let pinVerified =
+            false;
+
+
+        /*
+            এই Promise-এর কারণে Firebase login
+            complete হওয়ার আগে Fly চাপলেও
+            code অপেক্ষা করবে।
+        */
+
+
+        const authReady =
+            signInAnonymously(auth)
+
+                .then(
+                    (userCredential) => {
+
+
+                        currentUser =
+                            userCredential.user;
+
+
+                        console.log(
+                            "Firebase Anonymous Login Successful"
+                        );
+
+
+                        console.log(
+                            "USER ID:",
+                            currentUser.uid
+                        );
+
+
+                        return currentUser;
+
+                    }
+                )
+
+                .catch(
+                    (error) => {
+
+
+                        console.error(
+                            "Firebase Authentication Error:",
+                            error
+                        );
+
+
+                        document
+                            .getElementById("status")
+                            .innerHTML =
+                            "❌ Firebase connection failed";
+
+
+                        document
+                            .getElementById("status")
+                            .style.color =
+                            "red";
+
+
+                        throw error;
+
+                    }
+                );
+
+
+
+        /* =================================================
+           UNLOCK PIN
+        ================================================= */
+
 
         function unlockBird() {
 
-            const pin = document.getElementById("pin").value;
 
-            const status = document.getElementById("status");
+            const pin =
+                document
+                    .getElementById("pin")
+                    .value
+                    .trim();
 
-            const bird = document.getElementById("bird");
 
-            if (pin === SECRET_PIN) {
+            const status =
+                document
+                    .getElementById("status");
+
+
+            const pinArea =
+                document
+                    .getElementById("pinArea");
+
+
+            const nameArea =
+                document
+                    .getElementById("nameArea");
+
+
+
+            /* CORRECT PIN */
+
+            if (
+                pin === SECRET_PIN
+            ) {
+
+
+                pinVerified =
+                    true;
+
 
                 status.innerHTML =
-                    "🟢 ACCESS GRANTED — BIRD FLYING!";
+                    "🟢 ACCESS GRANTED — Enter your name!";
 
-                status.style.color = "green";
 
-                bird.classList.add("flying");
+                status.style.color =
+                    "green";
 
-            } else {
+
+                pinArea.style.display =
+                    "none";
+
+
+                nameArea.style.display =
+                    "block";
+
+
+                document
+                    .getElementById("name")
+                    .focus();
+
+            }
+
+
+            /* WRONG PIN */
+
+            else {
+
 
                 status.innerHTML =
                     "🔴 WRONG PIN!";
 
-                status.style.color = "red";
 
-                document.getElementById("pin").value = "";
+                status.style.color =
+                    "red";
+
+
+                document
+                    .getElementById("pin")
+                    .value =
+                    "";
 
             }
+
         }
 
-        document.getElementById("pin").addEventListener(
-            "keydown",
-            function(event) {
 
-                if (event.key === "Enter") {
-                    unlockBird();
-                }
+
+        /* =================================================
+           FLY BIRD
+        ================================================= */
+
+
+        async function flyBird() {
+
+
+            const status =
+                document
+                    .getElementById("status");
+
+
+            const nameInput =
+                document
+                    .getElementById("name");
+
+
+            const bird =
+                document
+                    .getElementById("bird");
+
+
+            const flyButton =
+                document
+                    .getElementById("flyButton");
+
+
+            const name =
+                nameInput
+                    .value
+                    .trim();
+
+
+
+            /* PIN CHECK */
+
+            if (
+                !pinVerified
+            ) {
+
+                status.innerHTML =
+                    "🔐 Please enter the correct PIN first.";
+
+                status.style.color =
+                    "red";
+
+                return;
 
             }
+
+
+
+            /* NAME CHECK */
+
+            if (
+                name.length < 1
+            ) {
+
+
+                status.innerHTML =
+                    "⚠️ Please enter your name.";
+
+                status.style.color =
+                    "red";
+
+
+                nameInput.focus();
+
+
+                return;
+
+            }
+
+
+
+            /* NAME TOO LONG */
+
+            if (
+                name.length > 30
+            ) {
+
+
+                status.innerHTML =
+                    "⚠️ Name must be 30 characters or less.";
+
+                status.style.color =
+                    "red";
+
+
+                return;
+
+            }
+
+
+
+            /*
+                Firebase login complete না হলে
+                এখানে automatically wait করবে।
+            */
+
+            status.innerHTML =
+                "⏳ Connecting to server...";
+
+            status.style.color =
+                "orange";
+
+
+            flyButton.disabled =
+                true;
+
+
+            nameInput.disabled =
+                true;
+
+
+
+            try {
+
+
+                /* WAIT FOR FIREBASE LOGIN */
+
+                const user =
+                    await authReady;
+
+
+                currentUser =
+                    user;
+
+
+
+                /* =================================================
+                   SAVE FLYER
+                ================================================= */
+
+
+                await set(
+
+                    ref(
+                        db,
+                        "flyers/" +
+                        currentUser.uid
+                    ),
+
+                    {
+
+                        name:
+                            name,
+
+                        uid:
+                            currentUser.uid,
+
+                        timestamp:
+                            Date.now()
+
+                    }
+
+                );
+
+
+
+                /* =================================================
+                   BIRD FLIES
+                ================================================= */
+
+
+                status.innerHTML =
+                    "🟢 ACCESS GRANTED — BIRD FLYING!";
+
+                status.style.color =
+                    "green";
+
+
+                bird.classList.add(
+                    "flying"
+                );
+
+
+
+            }
+
+
+            catch (error) {
+
+
+                console.error(
+                    "FLY ERROR:",
+                    error
+                );
+
+
+                status.innerHTML =
+                    "❌ Could not connect/save. Please refresh.";
+
+                status.style.color =
+                    "red";
+
+
+                /*
+                    Error হলে আবার button চালু
+                */
+
+                flyButton.disabled =
+                    false;
+
+
+                nameInput.disabled =
+                    false;
+
+            }
+
+        }
+
+
+
+        /* =================================================
+           BUTTON EVENTS
+        ================================================= */
+
+
+        document
+            .getElementById("unlockButton")
+            .addEventListener(
+                "click",
+                unlockBird
+            );
+
+
+        document
+            .getElementById("flyButton")
+            .addEventListener(
+                "click",
+                flyBird
+            );
+
+
+
+        /* =================================================
+           PIN ENTER KEY
+        ================================================= */
+
+
+        document
+            .getElementById("pin")
+            .addEventListener(
+                "keydown",
+                function(event) {
+
+
+                    if (
+                        event.key === "Enter"
+                    ) {
+
+
+                        unlockBird();
+
+                    }
+
+                }
+            );
+
+
+
+        /* =================================================
+           NAME ENTER KEY
+        ================================================= */
+
+
+        document
+            .getElementById("name")
+            .addEventListener(
+                "keydown",
+                function(event) {
+
+
+                    if (
+                        event.key === "Enter"
+                    ) {
+
+
+                        flyBird();
+
+                    }
+
+                }
+            );
+
+
+
+        /* =================================================
+           SHOW ALL FLYERS
+        ================================================= */
+
+
+        const flyersRef =
+            ref(
+                db,
+                "flyers"
+            );
+
+
+
+        onValue(
+
+            flyersRef,
+
+
+            (snapshot) => {
+
+
+                const flyersList =
+                    document
+                        .getElementById(
+                            "flyersList"
+                        );
+
+
+                flyersList.innerHTML =
+                    "";
+
+
+
+                /* NO FLYERS */
+
+                if (
+                    !snapshot.exists()
+                ) {
+
+
+                    flyersList.innerHTML =
+                        "<div class='flyer'>No flyers yet 🐦</div>";
+
+
+                    return;
+
+                }
+
+
+
+                /* GET DATA */
+
+                const data =
+                    snapshot.val();
+
+
+                const flyers =
+                    Object.values(data);
+
+
+
+                /* NEWEST FIRST */
+
+                flyers.sort(
+
+                    (a, b) =>
+
+                        (b.timestamp || 0)
+                        -
+                        (a.timestamp || 0)
+
+                );
+
+
+
+                /* DISPLAY */
+
+                flyers.forEach(
+
+                    (flyer, index) => {
+
+
+                        const div =
+                            document
+                                .createElement(
+                                    "div"
+                                );
+
+
+                        div.className =
+                            "flyer";
+
+
+                        div.textContent =
+
+                            (index + 1)
+                            +
+                            ". "
+                            +
+                            flyer.name
+                            +
+                            " 🐦";
+
+
+                        flyersList
+                            .appendChild(
+                                div
+                            );
+
+                    }
+
+                );
+
+            },
+
+
+            (error) => {
+
+
+                console.error(
+                    "Flyer List Error:",
+                    error
+                );
+
+
+                document
+                    .getElementById(
+                        "flyersList"
+                    )
+                    .textContent =
+                    "Unable to load flyers.";
+
+            }
+
         );
+
 
     </script>
 
+
 </body>
+
 </html>
